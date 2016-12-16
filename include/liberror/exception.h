@@ -90,7 +90,7 @@ namespace liberror
 
 					while (error_code_size-- > 0)
 					{
-						auto ch = static_cast<uint8_t>(error_code_ >> error_code_size * 8);
+						auto ch = static_cast<uint8_t>(error_code_ >> (error_code_size * 8));
 						message_.push_back(HEX_MAP[ch >> 4]);
 						message_.push_back(HEX_MAP[ch & 0x0F]);
 					}
@@ -151,7 +151,7 @@ namespace liberror
 			//}
 
 			char* buffer{ nullptr };
-			auto length = ::FormatMessage(flags, nullptr, error_code, MAKELANGID(LANG_ENGLISH, SUBLANG_DEFAULT), reinterpret_cast<char*>(&buffer), 0, nullptr);
+			auto length = ::FormatMessageA(flags, nullptr, error_code, MAKELANGID(LANG_ENGLISH, SUBLANG_DEFAULT), reinterpret_cast<char*>(&buffer), 0, nullptr);
 
 			if (length == 0)
 			{

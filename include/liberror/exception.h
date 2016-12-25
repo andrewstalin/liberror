@@ -18,7 +18,7 @@
 #ifdef _WIN32
 #include <Windows.h>
 using error_code_type = DWORD;
-#elif __linux__
+#elif defined (__linux__) || defined (__APPLE__)
 #include <cstring>
 using error_code_type = int;
 #endif
@@ -181,7 +181,7 @@ namespace liberror
 		const char* category() const override { return "WIN32"; }
 
 	};
-#elif __linux__
+#elif defined (__linux__) || defined (__APPLE__)
 	#define POSIX_ERROR(context) liberror::SystemException(errno, context)
 
 	class SystemException : public Exception

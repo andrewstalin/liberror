@@ -84,8 +84,8 @@ namespace liberror
 				try
 				{
 					message_.reserve(description_.size() + context_.size() + 100);
-
-					auto error_code_size{ sizeof(error_code_) };
+					
+					size_t error_code_size{ sizeof(error_code_) };
 					message_.append(category()).append("[0x");
 
 					while (error_code_size-- > 0)

@@ -38,30 +38,32 @@ namespace liberror
 	class Exception : public std::exception
 	{
 	private:
-		error_code_type error_code_;
-		std::string description_;
 		std::string context_;
+		std::string description_;
 		mutable std::string message_;
+		error_code_type error_code_;
 
 	public:
 		explicit Exception(error_code_type error_code)
-			: error_code_(error_code)
+			: Exception(error_code, nullptr, nullptr)
 		{}
 
 		Exception(error_code_type error_code, const char* context)
-			: error_code_(error_code), context_(context)
-		{}
-
-		Exception(error_code_type error_code, const char* context, const char* description)
-			: error_code_(error_code), description_(description), context_(context)
+			: Exception(error_code, context, nullptr)
 		{}
 
 		Exception(const ErrorInfo& error_info)
-			: error_code_(error_info.error_code), description_(error_info.description)
+			: Exception(error_info.error_code, nullptr, error_info.description)
 		{}
 
 		Exception(const ErrorInfo& error_info, const char* context)
-			: error_code_(error_info.error_code), description_(error_info.description), context_(context)
+			: Exception(error_info.error_code, context, error_info.description)
+		{}
+
+		Exception(error_code_type error_code, const char* context, const char* description)
+			: error_code_(error_code)
+			, context_(context ? context : "")
+			, description_(description ? description : "")
 		{}
 
 		Exception(const Exception&) = default;

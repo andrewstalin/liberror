@@ -61,9 +61,9 @@ namespace liberror
 		{}
 
 		Exception(error_code_type error_code, const char* context, const char* description)
-			: error_code_(error_code)
-			, context_(context ? context : "")
+			: context_(context ? context : "")
 			, description_(description ? description : "")
+			, error_code_(error_code)
 		{}
 
 		Exception(const Exception&) = default;

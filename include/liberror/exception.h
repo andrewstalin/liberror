@@ -61,9 +61,9 @@ namespace liberror
 		{}
 
 		Exception(error_code_type error_code, const char* context, const char* description)
-			: context_(context ? context : "")
+			: error_code_(error_code)
+			, context_(context ? context : "")
 			, description_(description ? description : "")
-			, error_code_(error_code)
 		{}
 
 		Exception(const Exception&) = default;
@@ -189,8 +189,12 @@ namespace liberror
 	class SystemException : public Exception
 	{
 	public:
-		SystemException(error_code_type ec, const char* cnt)
-			: Exception(ec, cnt, strerror(ec))
+		SystemException(error_code_type ec, const char* context)
+			: Exception(ec, context, strerror(ec))
+		{}
+
+		SystemException(error_code_type ec, const char* context, const char* description)
+			: Exception(ec, context, description)
 		{}
 
 		const char* category() const override { return "POSIX"; }
